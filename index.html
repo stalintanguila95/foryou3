@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Carta bajo las estrellas</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="sky">
+    <div class="moon"></div>
+    <div class="cloud cloud-one"></div>
+    <div class="cloud cloud-two"></div>
+    <div class="stars" id="stars"></div>
+    <div class="shooting-star" id="shootingStar"></div>
+  </div>
+
+  <main class="scene">
+    <section class="intro" id="intro">
+      <p class="small-text">Una pequeño detalle para ti</p>
+      <h1>Hay personas que llegan a nuestra vida...</h1>
+      <p class="subtitle">...y dejan una huella sin siquiera imaginarlo.</p>
+      <button class="main-button" id="openButton">Abrir carta ✉️</button>
+    </section>
+
+    <section class="envelope-stage hidden" id="envelopeStage">
+      <div class="envelope" id="envelope">
+        <div class="envelope-back"></div>
+        <div class="letter" id="letter">
+          <h2>Feliz cumpleaños 🎂</h2>
+          <p id="letterText" class="letter-text"></p>
+          <p class="soft-line hidden" id="softLine">Los recuerdos más bonitos suelen nacer en los momentos más sencillos.</p>
+          <div class="photos hidden" id="photos">
+            <figure class="polaroid"><img src="imagenes/foto1.jpg" alt="Foto 1"><figcaption>Un recuerdo</figcaption></figure>
+            <figure class="polaroid"><img src="imagenes/foto2.jpg" alt="Foto 2"><figcaption>Una sonrisa</figcaption></figure>
+          </div>
+          <button class="last-button hidden" id="lastButton">Una última cosa ✨</button>
+        </div>
+        <div class="envelope-front"></div>
+        <div class="envelope-flap"></div>
+      </div>
+    </section>
+
+    <section class="final-message hidden" id="finalMessage">
+      <p>Gracias por regalar sonrisas incluso cuando quizá no sabías que alguien las necesitaba.</p>
+      <span>Con cariño.</span>
+    </section>
+
+    <button class="music-button" id="musicButton" title="Música">🎵</button>
+    <audio id="music" src="musica/cancion.mp3" loop></audio>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
