@@ -1,7 +1,20 @@
 const letter = document.querySelector(".letter");
-const openButton=document.getElementById('openButton'),intro=document.getElementById('intro'),envelopeStage=document.getElementById('envelopeStage'),envelope=document.getElementById('envelope'),letterText=document.getElementById('letterText'),softLine=document.getElementById('softLine'),photos=document.getElementById('photos'),lastButton=document.getElementById('lastButton'),finalMessage=document.getElementById('finalMessage'),musicButton=document.getElementById('musicButton'),music=document.getElementById('music'),stars=document.getElementById('stars'),shootingStar=document.getElementById('shootingStar');
 
-const message=`Feliz cumpleaños.
+const openButton = document.getElementById("openButton");
+const intro = document.getElementById("intro");
+const envelopeStage = document.getElementById("envelopeStage");
+const envelope = document.getElementById("envelope");
+const letterText = document.getElementById("letterText");
+const softLine = document.getElementById("softLine");
+const photos = document.getElementById("photos");
+const lastButton = document.getElementById("lastButton");
+const finalMessage = document.getElementById("finalMessage");
+const musicButton = document.getElementById("musicButton");
+const music = document.getElementById("music");
+const stars = document.getElementById("stars");
+const shootingStar = document.getElementById("shootingStar");
+
+const message = `Feliz cumpleaños.
 
 Hoy quería regalarte algo un poco diferente.
 
@@ -35,155 +48,190 @@ Feliz cumpleaños.
 
 ✨ Con mucho cariño.`;
 
-for(let i=0;i<170;i++){
-    const star=document.createElement('span');
-    star.className='star';
-    star.style.left=Math.random()*100+'%';
-    star.style.top=Math.random()*100+'%';
-    star.style.animationDelay=Math.random()*3+'s';
-    star.style.animationDuration=1.8+Math.random()*2.5+'s';
+for (let i = 0; i < 170; i++) {
+    const star = document.createElement("span");
+    star.className = "star";
+    star.style.left = Math.random() * 100 + "%";
+    star.style.top = Math.random() * 100 + "%";
+    star.style.animationDelay = Math.random() * 3 + "s";
+    star.style.animationDuration = 1.8 + Math.random() * 2.5 + "s";
     stars.appendChild(star);
 }
 
-function fadeInMusic(){
-    music.volume=0;
-    music.play().then(()=>{
-        musicButton.classList.add("playing");
-        musicButton.textContent="⏸";
-
-        let volumen=0;
-        const fade=setInterval(()=>{
-            volumen+=0.02;
-            if(volumen>=0.6){
-                volumen=0.6;
-                clearInterval(fade);
-            }
-            music.volume=volumen;
-        },120);
-    }).catch(()=>{});
-}
-
-function fadeOutMusic(){
-    let volumen=music.volume;
-    const fade=setInterval(()=>{
-        volumen-=0.02;
-        if(volumen<=0){
-            volumen=0;
-            clearInterval(fade);
-            music.pause();
-        }
-        music.volume=volumen;
-    },120);
-}
-
-openButton.addEventListener('click',()=>{
-    fadeInMusic();
-
-    intro.classList.add('fade-out');
-
-    setTimeout(()=>{
-        intro.classList.add('hidden');
-        envelopeStage.classList.remove('hidden');
-    },700);
-
-    setTimeout(()=>{
-        envelope.classList.add('open');
-    },1200);
-
-    setTimeout(()=>{
-        typeLetter();
-    },2300);
-});
-
-function typeLetter(){
-    let index=0;
-    letterText.textContent='';
-    letterText.classList.add('typing');
-
-    const carta = document.querySelector(".letter");
-
-    const typing=setInterval(()=>{
-        letterText.textContent += message.charAt(index);
-
-        carta.scrollTo({
-            top: carta.scrollHeight,
+function scrollBottom() {
+    setTimeout(() => {
+        letter.scrollTo({
+            top: letter.scrollHeight,
             behavior: "smooth"
         });
+    }, 80);
+}
+
+function fadeInMusic() {
+    music.volume = 0;
+
+    music.play().then(() => {
+        musicButton.classList.add("playing");
+        musicButton.textContent = "⏸";
+
+        let volumen = 0;
+
+        const fade = setInterval(() => {
+            volumen += 0.02;
+
+            if (volumen >= 0.6) {
+                volumen = 0.6;
+                clearInterval(fade);
+            }
+
+            music.volume = volumen;
+        }, 120);
+    }).catch(() => {});
+}
+
+function fadeOutMusic() {
+    let volumen = music.volume;
+
+    const fade = setInterval(() => {
+        volumen -= 0.02;
+
+        if (volumen <= 0) {
+            volumen = 0;
+            clearInterval(fade);
+            music.pause();
+            musicButton.classList.remove("playing");
+            musicButton.textContent = "🎵";
+        }
+
+        music.volume = volumen;
+    }, 120);
+}
+
+openButton.addEventListener("click", () => {
+    fadeInMusic();
+
+    intro.classList.add("fade-out");
+
+    setTimeout(() => {
+        intro.classList.add("hidden");
+        envelopeStage.classList.remove("hidden");
+    }, 700);
+
+    setTimeout(() => {
+        envelope.classList.add("open");
+    }, 1200);
+
+    setTimeout(() => {
+        typeLetter();
+    }, 2300);
+});
+
+function typeLetter() {
+    let index = 0;
+
+    letterText.textContent = "";
+    letterText.classList.add("typing");
+
+    const typing = setInterval(() => {
+        letterText.textContent += message.charAt(index);
 
         index++;
 
-        if(index>=message.length){
+        scrollBottom();
+
+        if (index >= message.length) {
             clearInterval(typing);
-            letterText.classList.remove('typing');
+            letterText.classList.remove("typing");
             showEnding();
         }
-    },24);
+    }, 24);
 }
 
-function showEnding(){
-    setTimeout(()=>{
-        softLine.classList.remove('hidden');
-        setTimeout(()=>softLine.classList.add('show'),100);
-    },500);
+function showEnding() {
+    setTimeout(() => {
+        softLine.classList.remove("hidden");
 
-    setTimeout(()=>{
-        photos.classList.remove('hidden');
-        setTimeout(()=>photos.classList.add('show'),120);
-    },1900);
+        setTimeout(() => {
+            softLine.classList.add("show");
+            scrollBottom();
+        }, 100);
+    }, 500);
 
-    setTimeout(()=>{
+    setTimeout(() => {
+        photos.classList.remove("hidden");
+
+        setTimeout(() => {
+            photos.classList.add("show");
+            scrollBottom();
+        }, 120);
+
+        setTimeout(scrollBottom, 700);
+        setTimeout(scrollBottom, 1400);
+        setTimeout(scrollBottom, 2100);
+    }, 1900);
+
+    setTimeout(() => {
         goldenSparks();
         launchShootingStar();
-    },3300);
+        scrollBottom();
+    }, 3300);
 
-    setTimeout(()=>{
-        lastButton.classList.remove('hidden');
-        setTimeout(()=>lastButton.classList.add('show'),100);
-    },4800);
+    setTimeout(() => {
+        lastButton.classList.remove("hidden");
+
+        setTimeout(() => {
+            lastButton.classList.add("show");
+            scrollBottom();
+        }, 100);
+
+        setTimeout(scrollBottom, 700);
+    }, 4800);
 }
 
-function goldenSparks(){
-    for(let i=0;i<36;i++){
-        const spark=document.createElement('span');
-        spark.className='spark';
-        spark.style.left=42+Math.random()*16+'%';
-        spark.style.top=52+Math.random()*18+'%';
-        spark.style.animationDelay=Math.random()*.6+'s';
+function goldenSparks() {
+    for (let i = 0; i < 36; i++) {
+        const spark = document.createElement("span");
+        spark.className = "spark";
+        spark.style.left = 42 + Math.random() * 16 + "%";
+        spark.style.top = 52 + Math.random() * 18 + "%";
+        spark.style.animationDelay = Math.random() * 0.6 + "s";
         document.body.appendChild(spark);
-        setTimeout(()=>spark.remove(),2600);
+
+        setTimeout(() => spark.remove(), 2600);
     }
 }
 
-function launchShootingStar(){
-    shootingStar.style.opacity='1';
+function launchShootingStar() {
+    shootingStar.style.opacity = "1";
+
     shootingStar.animate([
-        {transform:'translate(-250px,-180px)',opacity:0},
-        {transform:'translate(25vw,18vh)',opacity:1},
-        {transform:'translate(120vw,75vh)',opacity:0}
-    ],{
-        duration:2200,
-        easing:'ease-out'
+        { transform: "translate(-250px,-180px)", opacity: 0 },
+        { transform: "translate(25vw,18vh)", opacity: 1 },
+        { transform: "translate(120vw,75vh)", opacity: 0 }
+    ], {
+        duration: 2200,
+        easing: "ease-out"
     });
 }
 
-lastButton.addEventListener('click',()=>{
+lastButton.addEventListener("click", () => {
     fadeOutMusic();
-    finalMessage.classList.remove('hidden');
+    finalMessage.classList.remove("hidden");
 });
 
-musicButton.addEventListener('click',async()=>{
-    try{
-        if(music.paused){
+musicButton.addEventListener("click", async () => {
+    try {
+        if (music.paused) {
             await music.play();
-            music.volume=0.6;
-            musicButton.classList.add('playing');
-            musicButton.textContent='⏸';
-        }else{
+            music.volume = 0.6;
+            musicButton.classList.add("playing");
+            musicButton.textContent = "⏸";
+        } else {
             music.pause();
-            musicButton.classList.remove('playing');
-            musicButton.textContent='🎵';
+            musicButton.classList.remove("playing");
+            musicButton.textContent = "🎵";
         }
-    }catch(e){
-        alert('Agrega una canción en la carpeta musica con el nombre cancion.mp3');
+    } catch (e) {
+        alert("Agrega una canción en la carpeta musica con el nombre cancion.mp3");
     }
 });
